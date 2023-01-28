@@ -1,8 +1,28 @@
-const http = require("http");
+const fs = require("fs");
 
-http
-  .createServer((req, res) => {
-    res.write("Hello world");
-    res.end();
+(function () {
+  // const fileContent = fs.readFileSync("./index.txt");
+
+  // console.log(fileContent.toString()); //Should print whatever is put into the file
+
+  fs.readdir("./", function(err, content) {
+    if(err) {
+      throw err;
+    } else {
+      content.forEach(fileOrFolder => {
+        const splitName = fileOrFolder.split(".");
+        if(splitName.length >= 2) {
+          console.log("This is a file");
+        } else {
+          const folderContents = fs.readFileSync(fileOrFolder)
+          console.log(folderContents)
+        }
+
+      })
+    }
   })
-  .listen(8080);
+
+
+})();
+
+//For the next one, let's open a folder and read all it's files and the file's contents;
